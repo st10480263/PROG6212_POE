@@ -1,0 +1,27 @@
+name: Build and Verify Solution
+
+on:
+  push:
+    branches: [ "main", "Part3" ]
+  pull_request:
+    branches: [ "main", "Part3" ]
+
+jobs:
+  build:
+    name: Build & Test (.NET)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build solution
+        run: dotnet build --no-restore --configuration Release
